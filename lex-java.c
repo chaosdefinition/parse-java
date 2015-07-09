@@ -34,7 +34,7 @@
 
 /*
  * two styles of state handler, one having a return value, the other not
- * see line 945 for more details
+ * see line 962 for more details
  */
 #define DEFINE_DO_STATE(stat) static inline void do_state_##stat(char c,\
 	int * state, char * word, int * length)
@@ -859,7 +859,7 @@ static void do_lex(FILE * src, FILE * out)
  *
  * @out: a FILE pointer of output file
  * @word: word to print
- * @type: word type, see attribute list at line 35
+ * @type: word type, see attribute list at line 51
  */
 static inline void do_output_word(FILE * out, const char * word, int type)
 {
@@ -884,7 +884,7 @@ static inline void do_output_wrong_word(FILE * out, const char * word,
  *
  * @word: word to judge
  *
- * return: word type, see attribute list at line 35
+ * return: word type, see attribute list at line 51
  */
 static inline int do_judgement(const char * word)
 {

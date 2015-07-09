@@ -32,7 +32,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* checker and translator definitions, see line 567 for more details */
+/* checker and translator definitions, see line 584 for more details */
 #define DEFINE_CHECK(N) static int check_##N(FILE * src)
 #define DEFINE_TRANSLATE(N) static void translate_##N(FILE * src, FILE * out)
 #define DEFINE_TRANSLATE_RETURN(N) static int translate_##N(FILE * src,\
@@ -282,7 +282,7 @@ static void get_word(FILE * src, struct word_t * ret)
  * check a word of the given type and value
  *
  * @word: a pointer to struct word_t
- * @type: attribute key, see line 37
+ * @type: attribute key, see line 54
  * @value: value of the word, can be NULL
  *
  * return: 1 if valid, 0 otherwise

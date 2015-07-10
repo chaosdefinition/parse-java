@@ -32,7 +32,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* checker and translator definitions, see line 584 for more details */
+/* checker and translator definitions, see line 577 for more details */
 #define DEFINE_CHECK(N) static int check_##N(FILE * src)
 #define DEFINE_TRANSLATE(N) static void translate_##N(FILE * src, FILE * out)
 #define DEFINE_TRANSLATE_RETURN(N) static int translate_##N(FILE * src,\
@@ -293,14 +293,9 @@ static inline int check_word(const struct word_t * word, int type,
 	if (word->key != type) {
 		goto invalid;
 	}
-	if (value != NULL) {
-		if (strcmp(word->value, value) == 0) {
-			goto valid;
-		}
+	if (value != NULL && strcmp(word->value, value) != 0) {
 		goto invalid;
 	}
-
-valid:
 	return 1;
 
 invalid:
@@ -317,8 +312,6 @@ static inline void return_word(const struct word_t * word)
 	if (returned.key == 0) {
 		returned.key = word->key;
 		strncpy(returned.value, word->value, BUF_SIZE);
-	} else {
-		fprintf(stderr, "return 2 or more words!!!\n");
 	}
 }
 
@@ -528,7 +521,7 @@ static int do_validate_lex(FILE * src)
 
 /*
  * validate the grammar
- * grammar: S -> while(E) A; | A;
+ * grammar: S -> while (E) A; | A;
  *          E -> V O V
  *          A -> [identifier] = C
  *          V -> [identifier] | [integer constant]
@@ -581,13 +574,13 @@ static void do_parse(FILE * src, FILE * out)
 	}
 }
 
-/********************* checkers and translaters *******************************/
+/********************* checkers and translators *******************************/
 /*
  * checkers are used in grammar check, in which phase no output is generated
  * they all have a return value of int indicating whether the input complies
  * with the grammar
  *
- * translaters are used after checkers being called so they do nothing about
+ * translators are used after checkers being called so they do nothing about
  * grammar check and merely do translate and output
  * most of them do not have a return value, and the only special case is the
  * translator of S, which returns an int indicating whether it meets an EOF
@@ -595,7 +588,7 @@ static void do_parse(FILE * src, FILE * out)
 
 /*
  * check statement
- * S -> while(E) A; | A;
+ * S -> while (E) A; | A;
  */
 DEFINE_CHECK(S)
 {
@@ -645,7 +638,7 @@ error:
 
 /*
  * translate statement
- * S -> while(E) A; | A;
+ * S -> while (E) A; | A;
  */
 DEFINE_TRANSLATE_RETURN(S)
 {
@@ -1064,7 +1057,7 @@ DEFINE_TRANSLATE(T1)
 		if (check_word(&word2, MUL_DIV, "*")) {
 			fprintf(out, "\tmul\t%s\n", word3.value);
 		} else if (check_word(&word2, MUL_DIV, "/")) {
-			fprintf(out, "\tsub\t%s\n", word3.value);
+			fprintf(out, "\tdiv\t%s\n", word3.value);
 		}
 		/* release operand2 if it is a register */
 		if (check_word(&word3, REGISTER, NULL)) {
@@ -1120,7 +1113,7 @@ DEFINE_CHECK(M)
 }
 
 /*
- * translaters of O, P and M are the same
+ * translators of O, P and M are the same
  * they just get a word and then push it into operator stack
  */
 DEFINE_TRANSLATE(O_P_M)

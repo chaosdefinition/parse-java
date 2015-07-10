@@ -549,7 +549,7 @@ static int do_validate_grammar(FILE * src)
 			return 0;
 		}
 		/* EOF */
-		else if (ret = -1) {
+		else if (ret == -1) {
 			return 1;
 		}
 	}

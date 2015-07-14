@@ -898,6 +898,7 @@ DEFINE_CHECK(C1)
 		return 1;
 	}
 	return_word(&word);
+	return 1;
 }
 
 /*
@@ -1005,6 +1006,7 @@ DEFINE_CHECK(T1)
 		return 1;
 	}
 	return_word(&word);
+	return 1;
 }
 
 /*

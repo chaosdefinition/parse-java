@@ -773,7 +773,7 @@ static void do_lex(FILE * src, FILE * out)
 				}
 				break;
 
-			/* catch a '/*', block comment start */
+			// catch a '/*', block comment start
 			case 74:
 				if (do_state_74(buffer[pos + i], &state, word,
 					&length)) {

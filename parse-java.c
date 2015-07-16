@@ -32,7 +32,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* checker and translator definitions, see line 577 for more details */
+/* checker and translator definitions, see line 573 for more details */
 #define DEFINE_CHECK(N) static int check_##N(FILE * src)
 #define DEFINE_TRANSLATE(N) static void translate_##N(FILE * src, FILE * out)
 #define DEFINE_TRANSLATE_RETURN(N) static int translate_##N(FILE * src,\
@@ -108,11 +108,9 @@ static struct word_t returned = {
 /* global stacks of operators and operands */
 static struct stack_t operators = {
 	.top = 0,
-	.words = { 0 },
 };
 static struct stack_t operands = {
 	.top = 0,
-	.words = { 0 },
 };
 
 /* global register usage indicator */
@@ -563,8 +561,6 @@ static int do_validate_grammar(FILE * src)
  */
 static void do_parse(FILE * src, FILE * out)
 {
-	int ret;
-
 	rewind(src);
 	while (1) {
 		if (CALL_TRANSLATE(S, src, out) == -1) {
@@ -1069,8 +1065,8 @@ DEFINE_TRANSLATE(T1)
 		reg_no2 = alloc_register();
 		fprintf(out, "\tmov\t%s, %s\n", get_register_name(reg_no2),
 			word.value);
+		free_register(get_register_no(word.value));
 		strncpy(word.value, get_register_name(reg_no2), BUF_SIZE);
-		free_register(reg_no);
 		/* finally push the result before translating T1 */
 		push_operand(&word);
 

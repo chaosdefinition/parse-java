@@ -48,6 +48,10 @@
 # define ARRAY_SIZE(array) (sizeof(array) / sizeof(array[0]))
 #endif /* ARRAY_SIZE */
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /* attribute list */
 enum
 {
@@ -1719,3 +1723,7 @@ DEFINE_DO_STATE_RETURN(77)
 
 	return 0;
 }
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
